@@ -484,7 +484,7 @@ try{
 			}else{
 				println "Wiperdog home not found !"
 				println "Please config it !"
-				//return
+				return
 			}
 
 			if(request.xpage == "plain") {
@@ -497,21 +497,8 @@ try{
 
 			}
 			def proc = null
-                        //Check service installed or not
-                        def cmdService  = "sudo which service wiperdog"
-                        proc = cmdService.execute()
-                        errorStr = proc.err.text
-                        def service = true
-                        if(errorStr.contains("no service in") || errorStr.trim().equals("")) {
-                           println "No wiperdog service installed on: ${params['wiperdog_path']['host'] } "
-                           service = false
-                        }
 			if(cmd != null &amp;&amp; !cmd.equals("") &amp;&amp; cmd.equals("start")){
-                                if(service) {
-                                  command += "sudo service wiperdog start"
-                                } else {
-				  command += '/bin/sh ' + decidedWiperdog_path + '/bin/wiperdog start '
-                                }
+				command += '/bin/sh ' + decidedWiperdog_path + '/bin/wiperdog start '
 				proc = command.execute()
 				proc.waitFor()
 				errorStr = proc.err.text
@@ -519,11 +506,7 @@ try{
 					println "&lt;p&gt; Information: ${errorStr}&lt;/p&gt;"
 				println "&lt;p&gt; Output: ${proc.in.text}&lt;/p&gt;"
 			}else if(cmd != null &amp;&amp; !cmd.equals("") &amp;&amp; cmd.equals("stop")){
-                                if(service) {
-                                  command += "sudo service wiperdog stop"
-                                } else {
-				  command += '/bin/sh ' + decidedWiperdog_path + '/bin/wiperdog stop '
-                                }
+				command += '/bin/sh ' + decidedWiperdog_path + '/bin/wiperdog stop '
 				proc = command.execute()
 				proc.waitFor()
 				errorStr = proc.err.text
@@ -531,11 +514,7 @@ try{
 				println "&lt;p&gt; Information: ${errorStr}&lt;/p&gt;"
 				println "&lt;p&gt; Output: ${proc.in.text}&lt;/p&gt;"
 			}else if(cmd != null &amp;&amp; !cmd.equals("") &amp;&amp; cmd.equals("status")){
-                                if(service) {
-                                  command += "sudo service wiperdog status"
-                                } else {
-				  command += '/bin/sh ' + decidedWiperdog_path + '/bin/wiperdog status '
-                                }
+				command += '/bin/sh ' + decidedWiperdog_path + '/bin/wiperdog status '
 				proc = command.execute()
 				proc.waitFor()
 				errorStr = proc.err.text
@@ -599,7 +578,7 @@ try{
 			}else{
 				println "Wiperdog home not found !"
 				println "Please config it !"
-				//return
+				return
 			}
 			//-- END
 			//-- Set request content type
@@ -611,7 +590,6 @@ try{
 			def errorStr = ""
 			def psExec = null
 			def command = ""
-
 			List&lt;String&gt; listCmd = new ArrayList&lt;String&gt;()
 			//Get PsExec path to run remote commands
 			def isLocalhost = true
@@ -628,15 +606,6 @@ try{
 					return
 				}
 			}
-                        def cmdService  = "sc query wiperdog | findstr wiperdog"
-                        proc = cmdService.execute()
-                        errorStr = proc.err.text
-                        def service = true
-                        if(errorStr.trim().equals("")) {
-                           println "No wiperdog service installed on: ${params['wiperdog_path']['host'] } "
-                           service = false
-                        }
-
 			//Run start wiperdog command
 			if(cmd != null &amp;&amp; !cmd.equals("") &amp;&amp; cmd.equals("start")){
 				listCmd = buildCmdList(isLocalhost,psExec,listCmd,true)
