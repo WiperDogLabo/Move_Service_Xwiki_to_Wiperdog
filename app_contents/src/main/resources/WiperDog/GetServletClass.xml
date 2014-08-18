@@ -451,8 +451,7 @@ class GetServlet implements ScriptService{
                      LastAccum:[servlet:"http://localhost:8089/LastAccumulation",desc:"Using for WiperDog/LastAccumulation page"],
                      PolicyString:[servlet:"http://localhost:8089/PolicyString",desc:"Using for WiperDog/processPolicy page"],
                      ChooseJobPolicy:[servlet:"http://localhost:8089/ChooseJobPolicy",desc:"Using for WiperDog/processPolicy page"]
-		  ],
-                  mongoDB:[host:"127.0.0.1",port:27017,dbName:"wiperdog"]
+		  ]
                 ]
 
 	Object getParam(def name, services){
